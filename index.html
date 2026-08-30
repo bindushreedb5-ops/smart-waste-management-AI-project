@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoVision AI 3.0 — Smart Waste Detection & IoT Eco-System</title>
+    <meta name="description" content="Next-Gen AI-powered Waste Sorting, Real-Time AR Scanner, Smart City IoT Bin Fleet Simulator, and Gamified Eco-Intelligence.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- BACKGROUND GLOW EFFECTS -->
+    <div class="bg-mesh"></div>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <div class="logo-icon-wrapper">
+                    <span class="logo-emoji">♻️</span>
+                    <span class="pulse-ring"></span>
+                </div>
+                <div class="logo-text">
+                    <h1>EcoVision <span class="ai-badge">AI 3.0</span></h1>
+                    <p class="tagline">Smart Waste Detection & Autonomous IoT Ecosystem</p>
+                </div>
+            </div>
+
+            <!-- Header Quick Stats & Controls -->
+            <div class="header-actions">
+                <div class="eco-xp-badge" id="headerXpBadge" title="Your Total Eco Experience Points">
+                    <span class="star-icon">⚡</span>
+                    <span class="xp-val" id="topXpDisplay">150 XP</span>
+                    <span class="user-level" id="topLevelDisplay">Lvl 1 Eco Scout</span>
+                </div>
+
+                <div class="control-group">
+                    <button class="icon-btn" id="voiceToggleBtn" title="Toggle AI Voice Announcements" aria-label="Toggle Voice">
+                        <span id="voiceIcon">🔊</span>
+                    </button>
+                    <button class="icon-btn" id="soundToggleBtn" title="Toggle Sound Effects" aria-label="Toggle SFX">
+                        <span id="soundIcon">🔔</span>
+                    </button>
+                    <button class="icon-btn" id="themeToggleBtn" title="Toggle Dark / Light Theme" aria-label="Toggle Theme">
+                        <span id="themeIcon">🌙</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- NAVIGATION TABS -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-tab="scanner-section">
+                <span class="tab-icon">📷</span> AI Vision Scanner
+            </button>
+            <button class="tab-btn" data-tab="iot-section">
+                <span class="tab-icon">🏙️</span> IoT Smart Bins
+            </button>
+            <button class="tab-btn" data-tab="game-section">
+                <span class="tab-icon">🎮</span> Sort-It Arcade
+            </button>
+            <button class="tab-btn" data-tab="analytics-section">
+                <span class="tab-icon">📊</span> Eco Analytics & Badges
+            </button>
+            <button class="tab-btn" data-tab="taxonomy-section">
+                <span class="tab-icon">📚</span> Waste Wiki
+            </button>
+        </nav>
+    </header>
+
+    <main class="main-content">
+
+        <!-- ============================================================== -->
+        <!-- TAB 1: AI VISION SCANNER SECTION -->
+        <!-- ============================================================== -->
+        <section id="scanner-section" class="tab-pane active">
+
+            <!-- Hero Intro Banner -->
+            <div class="hero-card">
+                <div class="hero-content">
+                    <div class="hero-pill">⚡ Neural Vision Engine Active</div>
+                    <h2>Autonomous AI Waste Recognition</h2>
+                    <p>Detect recyclable, organic, paper, glass, metal, and hazardous e-waste in milliseconds with real-time AR bounding boxes and eco-decomposition intelligence.</p>
+                </div>
+                <div class="hero-stats-row">
+                    <div class="hstat-item">
+                        <span class="hstat-num" id="heroScanCount">0</span>
+                        <span class="hstat-label">Total Scanned</span>
+                    </div>
+                    <div class="hstat-item">
+                        <span class="hstat-num" id="heroAccuracy">99.2%</span>
+                        <span class="hstat-label">AI Precision</span>
+                    </div>
+                    <div class="hstat-item">
+                        <span class="hstat-num" id="heroCo2Offset">0.0 kg</span>
+                        <span class="hstat-label">CO₂ Offset</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scanner Workspace (Split Grid) -->
+            <div class="scanner-grid">
+
+                <!-- Left Column: Camera Viewport & HUD Overlay -->
+                <div class="scanner-viewport-card">
+                    <div class="viewport-header">
+                        <div class="scanner-status-indicator">
+                            <span class="status-dot" id="liveStatusDot"></span>
+                            <span class="status-text" id="cameraStatus">Camera Offline • Ready</span>
+                        </div>
+                        <div class="mode-toggles">
+                            <label class="switch-label" title="Continuous Real-time Scanning">
+                                <input type="checkbox" id="continuousModeToggle">
+                                <span class="slider"></span>
+                                <span class="label-text">Live Continuous AI</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Video & Canvas Container -->
+                    <div class="video-container" id="videoContainer">
+                        <video id="camera" autoplay playsinline muted></video>
+                        <canvas id="arCanvas"></canvas>
+
+                        <!-- Laser Scanning Effect Overlay -->
+                        <div class="scanner-laser" id="scannerLaser"></div>
+
+                        <!-- Standby / Placeholder Screen -->
+                        <div class="viewport-placeholder" id="viewportPlaceholder">
+                            <div class="placeholder-icon">📷</div>
+                            <h3>AI Optical Sensor Inactive</h3>
+                            <p>Click "Start Camera" or select any sample object below to test the AI model instantly.</p>
+                            <div class="placeholder-btns">
+                                <button class="btn btn-primary" id="startCamBtnInline">
+                                    <span>📹</span> Start Live Camera
+                                </button>
+                                <label class="btn btn-secondary upload-label">
+                                    <span>📁</span> Upload Photo
+                                    <input type="file" id="imageUploadInput" accept="image/*" style="display: none;">
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- HUD Tech Overlay Info -->
+                        <div class="hud-tech-overlay">
+                            <div class="hud-corner top-left"></div>
+                            <div class="hud-corner top-right"></div>
+                            <div class="hud-corner bottom-left"></div>
+                            <div class="hud-corner bottom-right"></div>
+                            <div class="hud-fps" id="hudFps">FPS: --</div>
+                            <div class="hud-res" id="hudRes">RES: 1080p</div>
+                        </div>
+                    </div>
+
+                    <!-- Camera Control Bar -->
+                    <div class="camera-toolbar">
+                        <button class="btn btn-primary" id="cameraBtn">
+                            <span class="btn-icon">📷</span>
+                            <span id="cameraBtnText">Start Camera</span>
+                        </button>
+
+                        <button class="btn btn-accent" id="scanBtn">
+                            <span class="btn-icon">⚡</span>
+                            <span>Scan Object</span>
+                        </button>
+
+                        <label class="btn btn-outline upload-toolbar-btn" title="Upload an image from your computer">
+                            <span class="btn-icon">📤</span>
+                            <span>Upload</span>
+                            <input type="file" id="imageUploadInput2" accept="image/*" style="display:none;">
+                        </label>
+
+                        <button class="btn btn-icon-only" id="switchCameraBtn" title="Switch Camera (Front/Back)">
+                            🔄
+                        </button>
+                    </div>
+
+                    <!-- Status Notification Banner -->
+                    <div class="detection-banner" id="detectionBanner">
+                        <div class="banner-icon" id="bannerIcon">🤖</div>
+                        <div class="banner-content">
+                            <h4 id="detectionStatus">AI Engine Standby</h4>
+                            <p id="detectionSubstatus">Ready to identify waste materials and recommend optimal disposal.</p>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Quick-Test Sample Gallery -->
+                    <div class="sample-gallery-section">
+                        <div class="section-subhead">
+                            <span>🧪 Quick Test Demo Gallery (Click to simulate instant scan)</span>
+                            <span class="badge-mini">8 Samples</span>
+                        </div>
+                        <div class="sample-grid" id="sampleGrid">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: AI Detection Intelligence & Eco Insights -->
+                <div class="intelligence-card">
+                    <div class="intel-header">
+                        <div class="intel-title">
+                            <span class="intel-icon">🧠</span>
+                            <h3>Neural Classification Intelligence</h3>
+                        </div>
+                        <span class="ai-model-tag" id="modelStateTag">COCO-SSD v2</span>
+                    </div>
+
+                    <!-- Result Hero Card -->
+                    <div class="result-hero-box" id="resultHeroBox">
+                        <div class="object-badge-row">
+                            <span class="category-chip" id="resCategoryChip">AWAITING OBJECT</span>
+                            <span class="confidence-badge" id="resConfidenceBadge">--%</span>
+                        </div>
+                        <h2 class="detected-name" id="resObjectName">No Object Detected</h2>
+                        <div class="bin-recommendation-box" id="binRecommendationBox">
+                            <div class="bin-graphic" id="binGraphic">🗑️</div>
+                            <div class="bin-details">
+                                <span class="bin-label">RECOMMENDED DISPOSAL BIN:</span>
+                                <h3 class="bin-name" id="resBinName">Waiting for scan...</h3>
+                                <p class="bin-desc" id="resBinDesc">Point camera at waste item or select a demo sample.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Deep Eco Intelligence Metrics -->
+                    <div class="eco-metrics-grid">
+                        <!-- Decomposition Timeline -->
+                        <div class="eco-metric-card">
+                            <div class="metric-top">
+                                <span class="metric-icon">⏳</span>
+                                <span class="metric-title">Decomposition</span>
+                            </div>
+                            <div class="metric-value" id="decompValue">--</div>
+                            <div class="metric-caption" id="decompCaption">Nature's breakdown time</div>
+                            <div class="progress-bar-wrap">
+                                <div class="progress-bar-fill fill-amber" id="decompProgress" style="width: 0%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Carbon Offset Potential -->
+                        <div class="eco-metric-card">
+                            <div class="metric-top">
+                                <span class="metric-icon">🌍</span>
+                                <span class="metric-title">CO₂ Savings</span>
+                            </div>
+                            <div class="metric-value" id="co2Value">-- g</div>
+                            <div class="metric-caption" id="co2Caption">Prevented greenhouse gas</div>
+                            <div class="progress-bar-wrap">
+                                <div class="progress-bar-fill fill-emerald" id="co2Progress" style="width: 0%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Water Conserved -->
+                        <div class="eco-metric-card">
+                            <div class="metric-top">
+                                <span class="metric-icon">💧</span>
+                                <span class="metric-title">Water Conserved</span>
+                            </div>
+                            <div class="metric-value" id="waterValue">-- L</div>
+                            <div class="metric-caption" id="waterCaption">Resource saved via recycling</div>
+                            <div class="progress-bar-wrap">
+                                <div class="progress-bar-fill fill-cyan" id="waterProgress" style="width: 0%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- EcoXP Awarded -->
+                        <div class="eco-metric-card">
+                            <div class="metric-top">
+                                <span class="metric-icon">⭐</span>
+                                <span class="metric-title">Eco Reward</span>
+                            </div>
+                            <div class="metric-value" id="xpAwardValue">+0 XP</div>
+                            <div class="metric-caption">Earned for sorting correctly</div>
+                            <div class="progress-bar-wrap">
+                                <div class="progress-bar-fill fill-purple" style="width: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Upcycling & Pro Action Tips -->
+                    <div class="intel-card-action">
+                        <div class="action-top">
+                            <span class="action-icon">💡</span>
+                            <h4>Smart Upcycling & Action Tip</h4>
+                        </div>
+                        <p class="action-text" id="upcycleTipText">
+                            Properly washing and flattening containers before sorting increases recycling efficiency by up to 40%.
+                        </p>
+                    </div>
+
+                    <!-- Hazard & Special Handling Alert -->
+                    <div class="hazard-alert-box" id="hazardAlertBox" style="display: none;">
+                        <span class="hazard-icon">⚠️</span>
+                        <div class="hazard-content">
+                            <h4 id="hazardTitle">Hazard Warning</h4>
+                            <p id="hazardDesc">This item requires specialized municipal hazardous e-waste collection.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- TAB 2: IOT SMART BIN FLEET SIMULATOR -->
+        <!-- ============================================================== -->
+        <section id="iot-section" class="tab-pane">
+
+            <div class="section-intro">
+                <div class="section-title-wrap">
+                    <span class="sec-badge">Smart City Mesh</span>
+                    <h2>Autonomous IoT Smart Bin Fleet</h2>
+                    <p>Live telemetry simulation from ultrasonic level sensors, automated pneumatic compaction, temperature monitoring, and AI-optimized collection routes.</p>
+                </div>
+                <div class="section-actions">
+                    <button class="btn btn-outline" id="simulateDepositionBtn">
+                        <span>🧪</span> Simulate Waste Deposit
+                    </button>
+                    <button class="btn btn-primary" id="dispatchTruckBtn">
+                        <span>🚛</span> Dispatch Smart Route AI
+                    </button>
+                </div>
+            </div>
+
+            <!-- Smart Bin Fleet Grid -->
+            <div class="smart-bins-grid" id="smartBinsGrid">
+                <!-- 6 Bins generated via script: Plastic, Paper, Organic, Metal, E-Waste, Glass -->
+            </div>
+
+            <!-- Automated Route Optimization Card -->
+            <div class="route-optimizer-card" id="routeOptimizerCard">
+                <div class="route-header">
+                    <div class="route-title">
+                        <span class="route-icon">🗺️</span>
+                        <div>
+                            <h3>AI Dynamic Collection Route Optimizer</h3>
+                            <p>Real-time graph algorithm calculating shortest carbon-neutral dispatch path</p>
+                        </div>
+                    </div>
+                    <span class="route-status-pill" id="routeStatusPill">OPTIMIZED • 3 CRITICAL BINS</span>
+                </div>
+
+                <div class="route-map-canvas-container">
+                    <canvas id="routeMapCanvas" width="900" height="260"></canvas>
+                </div>
+
+                <div class="route-stats-bar">
+                    <div class="rstat">
+                        <span class="rstat-label">Total Route Distance:</span>
+                        <span class="rstat-val" id="routeDist">4.8 km</span>
+                    </div>
+                    <div class="rstat">
+                        <span class="rstat-label">Est. Fuel Savings:</span>
+                        <span class="rstat-val" id="routeFuel">32.4%</span>
+                    </div>
+                    <div class="rstat">
+                        <span class="rstat-label">Truck Status:</span>
+                        <span class="rstat-val text-emerald" id="routeTruckStatus">Active on Route #04</span>
+                    </div>
+                    <div class="rstat">
+                        <span class="rstat-label">Bins to Empty:</span>
+                        <span class="rstat-val text-amber" id="routeBinsCount">3 Bins &gt; 75%</span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- TAB 3: "SORT-IT" ARCADE MINI-GAME -->
+        <!-- ============================================================== -->
+        <section id="game-section" class="tab-pane">
+
+            <div class="game-arena-card">
+                <div class="game-top-bar">
+                    <div class="game-logo">
+                        <span class="glogo-icon">🎮</span>
+                        <div>
+                            <h2>Waste Sorter Arcade</h2>
+                            <p>Test your sorting reflexes! Drag or click the correct bin before time runs out!</p>
+                        </div>
+                    </div>
+                    <div class="game-stats-hud">
+                        <div class="ghud-item">
+                            <span class="ghud-label">SCORE</span>
+                            <span class="ghud-val" id="gameScoreDisplay">0</span>
+                        </div>
+                        <div class="ghud-item">
+                            <span class="ghud-label">STREAK</span>
+                            <span class="ghud-val text-amber" id="gameStreakDisplay">x0 🔥</span>
+                        </div>
+                        <div class="ghud-item">
+                            <span class="ghud-label">TIME</span>
+                            <span class="ghud-val text-cyan" id="gameTimerDisplay">30s</span>
+                        </div>
+                        <div class="ghud-item">
+                            <span class="ghud-label">HIGH SCORE</span>
+                            <span class="ghud-val text-purple" id="gameHighScoreDisplay">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Stage Container -->
+                <div class="game-stage" id="gameStage">
+                    
+                    <!-- Pre-Game / Start Overlay -->
+                    <div class="game-overlay" id="gameStartOverlay">
+                        <div class="goverlay-card">
+                            <div class="overlay-icon">🏆</div>
+                            <h3>Ready to Test Your Sorting Skills?</h3>
+                            <p>Sort items into <strong>Plastic, Paper, Organic, Metal, or E-Waste</strong>. Quick streaks give multiplier XP bonuses!</p>
+                            <button class="btn btn-accent btn-lg" id="startGameBtn">
+                                🚀 Start 30s Challenge
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Game Over Overlay -->
+                    <div class="game-overlay" id="gameOverOverlay" style="display: none;">
+                        <div class="goverlay-card">
+                            <div class="overlay-icon" id="gameOverEmoji">🌟</div>
+                            <h3 id="gameOverTitle">Challenge Complete!</h3>
+                            <p id="gameOverSummary">You scored 1,450 points and earned +150 EcoXP!</p>
+                            <div class="end-stats-row">
+                                <div class="end-stat">
+                                    <span class="eval" id="endCorrect">0</span>
+                                    <span class="elbl">Correct</span>
+                                </div>
+                                <div class="end-stat">
+                                    <span class="eval" id="endWrong">0</span>
+                                    <span class="elbl">Missed</span>
+                                </div>
+                                <div class="end-stat">
+                                    <span class="eval" id="endAccuracy">100%</span>
+                                    <span class="elbl">Accuracy</span>
+                                </div>
+                            </div>
+                            <div class="end-actions">
+                                <button class="btn btn-accent" id="restartGameBtn">🔄 Play Again</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Active Falling / Conveyor Item Target -->
+                    <div class="conveyor-arena">
+                        <div class="conveyor-belt">
+                            <div class="belt-line"></div>
+                        </div>
+
+                        <div class="current-waste-target" id="currentWasteTarget">
+                            <div class="waste-emoji" id="gameWasteEmoji">🥤</div>
+                            <div class="waste-label" id="gameWasteLabel">Plastic Bottle</div>
+                            <div class="waste-hint" id="gameWasteHint">Category hint: Packaging</div>
+                        </div>
+
+                        <!-- Feedback Popups (+100 XP, COMBO x3) -->
+                        <div class="game-feedback-float" id="gameFeedbackFloat"></div>
+                    </div>
+
+                    <!-- Interactive Drop/Click Bins -->
+                    <div class="game-bins-row" id="gameBinsRow">
+                        <button class="game-bin-btn bin-plastic" data-category="plastic">
+                            <span class="gbin-icon">♻️</span>
+                            <span class="gbin-name">Plastic</span>
+                            <span class="gbin-key">1</span>
+                        </button>
+                        <button class="game-bin-btn bin-paper" data-category="paper">
+                            <span class="gbin-icon">📄</span>
+                            <span class="gbin-name">Paper</span>
+                            <span class="gbin-key">2</span>
+                        </button>
+                        <button class="game-bin-btn bin-organic" data-category="organic">
+                            <span class="gbin-icon">🍌</span>
+                            <span class="gbin-name">Organic</span>
+                            <span class="gbin-key">3</span>
+                        </button>
+                        <button class="game-bin-btn bin-metal" data-category="metal">
+                            <span class="gbin-icon">🥫</span>
+                            <span class="gbin-name">Metal</span>
+                            <span class="gbin-key">4</span>
+                        </button>
+                        <button class="game-bin-btn bin-ewaste" data-category="ewaste">
+                            <span class="gbin-icon">🔋</span>
+                            <span class="gbin-name">E-Waste</span>
+                            <span class="gbin-key">5</span>
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- TAB 4: ECO ANALYTICS & BADGES -->
+        <!-- ============================================================== -->
+        <section id="analytics-section" class="tab-pane">
+
+            <!-- Citizen Eco Profile Banner -->
+            <div class="profile-hero-card">
+                <div class="avatar-col">
+                    <div class="profile-avatar">🌱</div>
+                    <div class="profile-rank-info">
+                        <h2 id="profileRankTitle">Master Eco-Guardian</h2>
+                        <p id="profileRankSub">Top 5% Contributor in City Cleanliness Initiative</p>
+                    </div>
+                </div>
+
+                <div class="level-progress-col">
+                    <div class="level-info-row">
+                        <span class="curr-level" id="profileLevelNum">Level 3</span>
+                        <span class="xp-ratio" id="profileXpRatio">450 / 1000 XP to Level 4</span>
+                    </div>
+                    <div class="progress-bar-wrap big-bar">
+                        <div class="progress-bar-fill fill-gradient" id="profileLevelBar" style="width: 45%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Big Stats Counter Grid -->
+            <div class="dashboard-stats-grid">
+                <div class="dash-stat-card">
+                    <div class="dstat-icon icon-emerald">🌿</div>
+                    <div class="dstat-info">
+                        <span class="dstat-num" id="statCo2Total">4.2 kg</span>
+                        <span class="dstat-label">Total CO₂ Diverted</span>
+                    </div>
+                </div>
+                <div class="dash-stat-card">
+                    <div class="dstat-icon icon-cyan">💧</div>
+                    <div class="dstat-info">
+                        <span class="dstat-num" id="statWaterTotal">85 L</span>
+                        <span class="dstat-label">Clean Water Saved</span>
+                    </div>
+                </div>
+                <div class="dash-stat-card">
+                    <div class="dstat-icon icon-amber">⚡</div>
+                    <div class="dstat-info">
+                        <span class="dstat-num" id="statEnergyTotal">12.8 kWh</span>
+                        <span class="dstat-label">Energy Conserved</span>
+                    </div>
+                </div>
+                <div class="dash-stat-card">
+                    <div class="dstat-icon icon-purple">🎯</div>
+                    <div class="dstat-info">
+                        <span class="dstat-num" id="statSortAccuracy">98%</span>
+                        <span class="dstat-label">Sorting Accuracy</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Badges & Achievements Arena -->
+            <div class="achievements-section">
+                <div class="section-subhead">
+                    <span>🏅 Eco Achievements & Impact Badges</span>
+                    <span class="badge-mini" id="badgeProgressCount">3 / 8 Unlocked</span>
+                </div>
+                <div class="badges-grid" id="badgesGrid">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+
+            <!-- Scan History & Telemetry Log -->
+            <div class="history-card">
+                <div class="history-header">
+                    <div class="history-title">
+                        <span class="ht-icon">📋</span>
+                        <div>
+                            <h3>Classification History Log</h3>
+                            <p>Stored records of AI detections with confidence levels & disposal routes</p>
+                        </div>
+                    </div>
+                    <div class="history-controls">
+                        <button class="btn btn-outline btn-sm" id="exportHistoryJsonBtn">Export JSON</button>
+                        <button class="btn btn-outline btn-sm" id="exportHistoryCsvBtn">Export CSV</button>
+                        <button class="btn btn-outline btn-sm text-rose" id="clearHistoryBtn">Clear Log</button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Detected Item</th>
+                                <th>Classification</th>
+                                <th>Target Bin</th>
+                                <th>Confidence</th>
+                                <th>Eco Impact</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody">
+                            <!-- Populated dynamically -->
+                            <tr class="empty-row">
+                                <td colspan="6">No scans recorded yet. Perform your first scan!</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- TAB 5: WASTE WIKI & TAXONOMY -->
+        <!-- ============================================================== -->
+        <section id="taxonomy-section" class="tab-pane">
+
+            <div class="wiki-intro">
+                <div class="wiki-title-wrap">
+                    <span class="sec-badge">Global Taxonomy</span>
+                    <h2>Comprehensive Waste & Recycling Wiki</h2>
+                    <p>Search over 80 items to learn exact disposal rules, decomposition physics, and recycling blueprints.</p>
+                </div>
+                <div class="wiki-search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="wikiSearchInput" placeholder="Search plastic, banana, laptop, battery, bottle...">
+                </div>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="wiki-filter-row">
+                <button class="filter-chip active" data-filter="all">All Items</button>
+                <button class="filter-chip" data-filter="plastic">🔵 Plastic</button>
+                <button class="filter-chip" data-filter="paper">🟡 Paper & Cardboard</button>
+                <button class="filter-chip" data-filter="organic">🟢 Organic Food</button>
+                <button class="filter-chip" data-filter="metal">⚪ Metal</button>
+                <button class="filter-chip" data-filter="glass">🔷 Glass</button>
+                <button class="filter-chip" data-filter="ewaste">🔴 E-Waste & Hazard</button>
+            </div>
+
+            <!-- Category Cards Grid -->
+            <div class="wiki-cards-grid" id="wikiCardsGrid">
+                <!-- Populated dynamically -->
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="app-footer">
+        <div class="footer-container">
+            <div class="footer-col-left">
+                <div class="footer-brand">
+                    <span class="f-icon">♻️</span>
+                    <span class="f-name">EcoVision AI 3.0</span>
+                </div>
+                <p>Autonomous AI Waste Recognition, Smart City IoT Bin Integration & Planetary Carbon Offset Engine.</p>
+            </div>
+            <div class="footer-col-right">
+                <p class="copyright">Built for <strong>Smart India Hackathon & Sustainable Planet Tech</strong></p>
+                <p class="tech-stack">Powered by TensorFlow.js • MobileNet/COCO-SSD • Web Audio API • Web Speech Synthesis</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- TOAST NOTIFICATION POPUP -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- AI LIBRARIES -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.17.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js"></script>
+
+    <!-- APPLICATION LOGIC -->
+    <script src="script.js"></script>
+</body>
+
+</html>
